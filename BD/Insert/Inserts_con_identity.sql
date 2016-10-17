@@ -7,9 +7,9 @@ go
 
 SET IDENTITY_INSERT Coordenada ON;  
 go
-INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(1,'34°35′59″S','58°22′55″O﻿')
+INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(1,'34°32′59″S','58°22′55″O﻿')
 INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(2,'36°35′49″S','48°22′55″O﻿')
-INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(3,'34°35′59?S','58°22′55?O?﻿')
+INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(3,'33°35′59?S','58°22′55?O?﻿')
 INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(4,'37°35′59?S','54°22′55?O?')
 INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(5,'14°25′59?S','28°22′55?O?')
 INSERT INTO Coordenada (IdCoordenada, latitud, Longitud) VALUES(6,'18°25′39?S','29°26′55?O?﻿')

@@ -347,6 +347,7 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		encomienda.setNombreReceptor("Alfredo"); 
 		encomienda.setApellidoReceptor("Receptor");
 		encomienda.setDniReceptor("99876543"); 
+		encomienda.setInternacional(false);
 		encomienda.setVolumenGranel(volumenGranel); 
 		
 		if(volumenGranel > 0){
@@ -545,6 +546,18 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	public void marcarEnvioDemorado(int idEnvio) {
 
 		GestionControlViajes.getInstancia().estaEnvioDemorado(idEnvio);
+		
+	}
+
+	@Override
+	public void nuevaEncomiedaParticular(String arg0, DTO_Direccion arg1,
+			DTO_Direccion arg2, DTO_Sucursal arg3, DTO_Sucursal arg4,
+			double arg5, double arg6, double arg7, double arg8, double arg9,
+			String arg10, boolean arg11, short arg12, boolean arg13,
+			String arg14, String arg15, String arg16, String arg17,
+			String arg18, String arg19, Double arg20, String arg21, String arg22)
+			throws RemoteException {
+		// TODO Auto-generated method stub
 		
 	}
 	

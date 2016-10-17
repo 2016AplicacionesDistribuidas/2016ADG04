@@ -193,7 +193,8 @@ public class EncomiendasTest {
 		c.setId(idcoord);
 		business.modificarCoordenadas(idEnvio, c);
 		//GestionControlViajes.getInstancia().actualizarEstadoVehiculo(envio.getIdEnvio(), CoordenadaDao.getInstancia().getById(3));
-		System.out.println(envio.getEstado());
+		Envio env = EnvioDao.getInstancia().getById(idEnvio);
+		System.out.println(env.getEstado());
 		System.out.println("----------------------------------------");
 		
 		/*Se indicara desviado*/
