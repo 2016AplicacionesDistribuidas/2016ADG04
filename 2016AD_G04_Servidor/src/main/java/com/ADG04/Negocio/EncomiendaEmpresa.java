@@ -28,6 +28,9 @@ import java.util.Set;
 
 
 
+
+
+
 import org.hibernate.mapping.Array;
 import org.hibernate.property.Getter;
 
@@ -75,8 +78,6 @@ public class EncomiendaEmpresa extends Encomienda{
 		
 	}
 
-	
-	
 	public EncomiendaEmpresa(Direccion direccionDestino, Sucursal sucursalDestno,
 			Sucursal sucursalOrigen, Direccion direccionOrigen,
 			Sucursal sucursalActual, Cliente cliente, Date fechaCreacion,
@@ -201,9 +202,9 @@ public class EncomiendaEmpresa extends Encomienda{
 		Manifiesto dtoM = this.getManifiesto();
 
 		ManifiestoE manifiestoE = new ManifiestoE();
-		
+		manifiestoE.setEncomienda(encomiendaEntity);
 		manifiestoE.setFecha(new Date());		
-		
+		manifiestoE.setEncomienda(encomiendaEntity);
 	
 		List<ItemManifiestoE> itemsManifiesto = new ArrayList<ItemManifiestoE>();
 		for(ItemManifiesto item:dtoM.getItemsManifiesto()){
@@ -224,8 +225,8 @@ public class EncomiendaEmpresa extends Encomienda{
 		}
 		manifiestoE.setItemsManifiesto(itemsManifiesto);
 		
-		//encomiendaEntity.setManifiesto(manifiestoE);
-		manifiestoE.setEncomienda(encomiendaEntity);
+		encomiendaEntity.setManifiesto(manifiestoE);
+		
 		/*Deberia persistir en cascada*/
 		if(this.productosEncomienda == null || this.productosEncomienda.size() == 0)
 			throw new BusinessException("La encomienda no tiene productos asignados");
@@ -299,58 +300,60 @@ public class EncomiendaEmpresa extends Encomienda{
 	
 	public DTO_Encomienda toDTO() {
 		
-		DTO_EncomiendaEmpresa dto = new DTO_EncomiendaEmpresa();
-		dto.setAlto(this.getAlto());
-		dto.setAncho(this.getAncho());
-		dto.setApellidoReceptor(this.getApellidoReceptor());
-		dto.setApilable(this.getApilable());
-		dto.setCantApilable(this.getCantApilable());
-		dto.setCargaGranel(this.getCargaGranel());
-		dto.setCondicionTransporte(this.getCondicionTransporte());
-		dto.setTipoEncomienda("E");
-		if(this.getFactura()!=null)
-			dto.setFactura(this.getFactura().toDTO());
+		DTO_EncomiendaEmpresa encomienda = new DTO_EncomiendaEmpresa();
+		encomienda.setIdEncomienda(this.getIdEncomienda());
+		encomienda.setCliente(this.getCliente().toDTO());
+		encomienda.setTipoEncomienda("E");
+		encomienda.setSucursalOrigen(this.getSucursalOrigen().toDTO());
+		encomienda.setSucursalActual(this.getSucursalActual().toDTO());
+		encomienda.setSucursalDestino(this.getSucursalDestino().toDTO());
 		
-		dto.setDniReceptor(this.getDniReceptor());
-		dto.setEstado(this.getEstado());
-		dto.setFechaCreacion(this.getFechaCreacion());
-		dto.setFragilidad(this.getFragilidad());
-		dto.setIdEncomienda(this.getIdEncomienda());
-		dto.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
-		dto.setInternacional(this.internacional);
-		dto.setLargo(this.getLargo());
+		encomienda.setLargo(this.getLargo());
+		encomienda.setAncho(this.getAncho());
+		encomienda.setInternacional(this.isInternacional());
+		encomienda.setAlto(this.getAlto());
+		encomienda.setPeso(this.getPeso());
+		encomienda.setVolumen(this.getVolumen());
+		encomienda.setTratamiento(this.getTratamiento()); 
+		encomienda.setApilable(this.getApilable());
+		encomienda.setCantApilable(this.getCantApilable()); 
+		encomienda.setRefrigerado(this.getRefrigerado());
+		encomienda.setCondicionTransporte(this.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(this.getIndicacionesManipulacion());
+		encomienda.setFragilidad(this.getFragilidad()); 
+		encomienda.setNombreReceptor(this.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(this.getApellidoReceptor());
+		encomienda.setDniReceptor(this.getDniReceptor()); 
+		encomienda.setVolumenGranel(this.getVolumenGranel()); 
+		encomienda.setUnidadGranel(this.getUnidadGranel());
+		encomienda.setCargaGranel(this.getCargaGranel());		
+		
+		encomienda.setTercerizada(this.isTercerizado());
+		encomienda.setEstado(this.getEstado());
+		encomienda.setFechaCreacion(this.getFechaEstimadaEntrega());
+		encomienda.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
 		if(this.getManifiesto()!=null)
-			dto.setManifiesto(this.getManifiesto().toDTO());
+			encomienda.setManifiesto(this.getManifiesto().toDTO());
 		
-		dto.setNombreReceptor(this.getNombreReceptor());
-		dto.setPeso(this.getPeso());
-		dto.setRefrigerado(this.refrigerado);
-		dto.setSucursalActual(this.getSucursalActual().toDTO());
-		dto.setSucursalDestino(this.getSucursalDestino().toDTO());
-		dto.setSucursalOrigen(this.getSucursalOrigen().toDTO());
-		dto.setTercerizada(this.tercerizado);
-		dto.setTratamiento(this.getTratamiento());
-		dto.setUnidadGranel(this.getUnidadGranel());
-		dto.setVolumen(this.getVolumen());
-		dto.setVolumenGranel(this.getVolumenGranel());
-		dto.setCliente(this.getCliente().toDTO());
-		dto.setFechaEstimadaEntrega(this.getFechaEstimadaEntrega());
-	
+		if(this.getRemito()!=null)
+			encomienda.setRemito(this.getRemito().toDTO());
+		
+		if(this.factura != null)
+			encomienda.setFactura(this.factura.toDTO());
+
+		//Envios
+		for(Envio envio:this.getEnvios()){
+			encomienda.addEnvio(envio.toDTO());
+		}
+
 		if(this.productosEncomienda.size()>0){
 			for(ProductoEncomienda pe: this.productosEncomienda){	
 				DTO_ProductoEncomienda pdto = pe.toDTO();
-				dto.addProducto(pdto);
+				encomienda.addProducto(pdto);
 			}
 		}
 		
-		//Envios
-		for(Envio envio:this.getEnvios()){
-			DTO_Envio e = new DTO_Envio();
-			e.setId(envio.getIdEnvio());
-			dto.addEnvio(e);
-		}
-				
-		return dto;
+		return encomienda;
 	}
 
 	public Encomienda fromEntity(EncomiendaE ence) {
@@ -395,6 +398,7 @@ public class EncomiendaEmpresa extends Encomienda{
 		//enc = (EncomiendaEmpresa)super.fromEntity(ence);
 		
 		if(ence.getProductoEncomiendas() != null){
+			System.out.println("productos: " + ence.getProductoEncomiendas().size());
 			List<ProductoEncomienda> productos =new  ArrayList<ProductoEncomienda>();
 			for(ProductoEncomiendaE pe: ence.getProductoEncomiendas()){
 				
@@ -408,17 +412,52 @@ public class EncomiendaEmpresa extends Encomienda{
 		//Envios
 		if(ence.getEnvios()!=null){
 			for(EnvioE envioE:ence.getEnvios()){
-				Envio e = new Envio();
-				e.setIdEnvio(envioE.getIdEnvio());
-				enc.addEnvio(e);
+				enc.addEnvio(envioFromEntity(envioE));
 			}
 		}
 
-		
 		return enc;
 	}
 
+
+	/**
+	 * Envio from Entity, sin pasar por la encomienda
+	 * **/
+	private Envio envioFromEntity(EnvioE e){
+		
+		Envio  env = new Envio();
+		env.setEstado(e.getEstado());
+		env.setFechaYHoraLlegadaEstimada(e.getFechaYHoraLlegadaEstimada());
+		env.setFechaYHoraSalida(e.getFechaYHoraSalida());
+		env.setIdEnvio(e.getIdEnvio());
+		env.setNroTracking(e.getNroTracking());
+		env.setPropio(e.isPropio());
+		env.setFechaActualizacion(e.getFechaActualizacion());
+		
+		MapaDeRuta mapa = null;
+		if(e.getMapaDeRuta()==null){
+			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+			mapa = new MapaDeRuta().fromEntity(mr);
+		}
+		else{
+			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+		}
+		
+		if(mapa!=null)
+			env.setMapaDeRuta(mapa);	
+		
+		env.setProveedor(new Proveedor().fromEntity(e.getProveedor()));
+		
+		if(e.getVehiculo() != null)
+			env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		
+		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
+		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
+		
+		return env;
+	}
 	
-	
+
 	
 }

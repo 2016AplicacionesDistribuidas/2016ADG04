@@ -1378,13 +1378,10 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 	}
 
 	@Override
-	public DTO_Encomienda getEncomiendaEmpresa(Integer id)
-			throws RemoteException {
-		DTO_Encomienda enc = new EncomiendaEmpresa().fromEntity(EncomiendaDao.getInstancia().getById(id)).toDTO();
-		if(enc.getTipoEncomienda().contains("E"))
-			return enc;
-		else
-			return null;
+	public DTO_EncomiendaEmpresa getEncomiendaEmpresa(Integer id) throws RemoteException {
+		EncomiendaEmpresa encEmpresa = (EncomiendaEmpresa)new EncomiendaEmpresa().fromEntity(EncomiendaDao.getInstancia().getById(id));
+		DTO_EncomiendaEmpresa enc = (DTO_EncomiendaEmpresa)encEmpresa.toDTO();
+		return enc;
 	}
 
 	@Override
@@ -1409,7 +1406,8 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 			List<EncomiendaE> lista = EncomiendaDao.getInstancia().getAllEmpresas();
 	        for(EncomiendaE enc: lista){
 	        	EncomiendaEmpresa ence = (EncomiendaEmpresa)new EncomiendaEmpresa().fromEntity(enc);
-	        	listaDTO.add((DTO_EncomiendaEmpresa)ence.toDTO());
+	        	DTO_EncomiendaEmpresa e = (DTO_EncomiendaEmpresa)ence.toDTO();
+	        	listaDTO.add(e);
 	        }
 			 return listaDTO;
 		}

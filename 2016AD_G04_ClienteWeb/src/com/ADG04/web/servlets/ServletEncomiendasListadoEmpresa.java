@@ -35,26 +35,22 @@ public class ServletEncomiendasListadoEmpresa extends HttpServlet {
     }
  
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	private void listarEncomiendasEmpresa(HttpServletRequest request, HttpServletResponse response) {
+		
 		try{
-			//String postcode = request.getParameter("type") ;
-			//if(postcode == null || postcode.trim().length() == 0) postcode = "BS21 7RH";
-			//System.out.println("Type: " + postcode);
-				  
-			List<EncomiendaWeb> encomiendas = new ArrayList<EncomiendaWeb>();
+			List<EncomiendaEmpresaWeb> encomiendas = new ArrayList<EncomiendaEmpresaWeb>();
 				 
 			int totalNumberOfPages = 1;
 			int currentPageNumber = 1;
-			int totalNumberOfRecords = 8; // All in there are 8 records in our dummy data object
 				 
 			List<DTO_EncomiendaEmpresa> encomiendasP = WebBusinessDelegate.getInstancia().listarEncomiendasEmpresa();
-			JqGridData<EncomiendaWeb> gridData = new JqGridData<EncomiendaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);
+			int totalNumberOfRecords = encomiendasP.size(); 
+			JqGridData<EncomiendaEmpresaWeb> gridData = new JqGridData<EncomiendaEmpresaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);		
 			
 			for(DTO_EncomiendaEmpresa encP:encomiendasP){
 
-				boolean envioAsignado= WebBusinessDelegate.getInstancia().estaEncomiendaAsignada(encP.getIdEncomienda());
-				gridData.addItem(new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(), encP.getEstado(), envioAsignado));
+				boolean envioAsignado = WebBusinessDelegate.getInstancia().estaEncomiendaAsignada(encP.getIdEncomienda());
+				gridData.addItem(new EncomiendaEmpresaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado));
 			}
 			
 			System.out.println("Grid Data: " + gridData.getJsonString());
@@ -72,7 +68,14 @@ public class ServletEncomiendasListadoEmpresa extends HttpServlet {
 	}
 
 
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		listarEncomiendasEmpresa(request, response);	
+	}
+
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		listarEncomiendasEmpresa(request, response);
 	}
 	
 	

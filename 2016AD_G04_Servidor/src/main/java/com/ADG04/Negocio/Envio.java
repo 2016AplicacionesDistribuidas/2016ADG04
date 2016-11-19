@@ -50,6 +50,7 @@ import java.util.Set;
 
 
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.xml.parsers.DocumentBuilder;
@@ -286,11 +287,14 @@ public class Envio{
 			dto.setSucursalDestino(this.sucursalDestino.toDTO());
 			dto.setSucursalOrigen(this.sucursalOrigen.toDTO());
 			
-			List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
-			for(Encomienda enc : this.getEncomiendas()){
-				lista.add(enc.toDTO());
+			if(this.getEncomiendas() != null){
+				List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
+				for(Encomienda enc : this.getEncomiendas()){
+					lista.add(encomiendaToDTO(enc));
+				}
+				dto.setEncomiendas(lista);
 			}
-			dto.setEncomiendas(lista);
+			
 			dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
 			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 			
@@ -305,20 +309,70 @@ public class Envio{
 				dto.setIdProveedor(this.getProveedor().getIdProveedor());
 			dto.setNumeroTracking(String.valueOf(this.getNroTracking()));
 			dto.setFechaActualizacion(fechaActualizacion);
-			List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
-			for(Encomienda enc : this.getEncomiendas()){
-				lista.add(enc.toDTO());
+			
+			if(this.getEncomiendas() != null){
+				List<DTO_Encomienda>lista = new ArrayList<DTO_Encomienda>();
+				for(Encomienda enc : this.getEncomiendas()){
+					lista.add(encomiendaToDTO(enc));
+				}
+				dto.setEncomiendas(lista);
 			}
-			dto.setEncomiendas(lista);
 			
 			dto.setIdSucursalDestino(this.sucursalDestino.getIdSucursal());
 			dto.setIdSucursalOrigen(this.sucursalOrigen.getIdSucursal());
 						
 			return dto;
 		}
-		
 	}
+		
+	/** 
+	 * Ecomienda.toDTO sin agregarle loo envios.
+	 * **/
+	public DTO_Encomienda encomiendaToDTO(Encomienda enc) {
+		
+		DTO_Encomienda encomienda = new DTO_Encomienda();
+		encomienda.setIdEncomienda(enc.getIdEncomienda());
+		encomienda.setCliente(enc.getCliente().toDTO());
 
+		encomienda.setSucursalOrigen(enc.getSucursalOrigen().toDTO());
+		encomienda.setSucursalActual(enc.getSucursalActual().toDTO());
+		encomienda.setSucursalDestino(enc.getSucursalDestino().toDTO());
+		
+		encomienda.setLargo(enc.getLargo());
+		encomienda.setAncho(enc.getAncho());
+		encomienda.setInternacional(enc.isInternacional());
+		encomienda.setAlto(enc.getAlto());
+		encomienda.setPeso(enc.getPeso());
+		encomienda.setVolumen(enc.getVolumen());
+		encomienda.setTratamiento(enc.getTratamiento()); 
+		encomienda.setApilable(enc.getApilable());
+		encomienda.setCantApilable(enc.getCantApilable()); 
+		encomienda.setRefrigerado(enc.getRefrigerado());
+		encomienda.setCondicionTransporte(enc.getCondicionTransporte()); 
+		encomienda.setIndicacionesManipulacion(enc.getIndicacionesManipulacion());
+		encomienda.setFragilidad(enc.getFragilidad()); 
+		encomienda.setNombreReceptor(enc.getNombreReceptor()); 
+		encomienda.setApellidoReceptor(enc.getApellidoReceptor());
+		encomienda.setDniReceptor(enc.getDniReceptor()); 
+		encomienda.setVolumenGranel(enc.getVolumenGranel()); 
+		encomienda.setUnidadGranel(enc.getUnidadGranel());
+		encomienda.setCargaGranel(enc.getCargaGranel());		
+		
+		encomienda.setTercerizada(enc.isTercerizado());
+		encomienda.setEstado(enc.getEstado());
+		encomienda.setFechaCreacion(enc.getFechaEstimadaEntrega());
+		encomienda.setFechaEstimadaEntrega(enc.getFechaEstimadaEntrega());
+		if(enc.getManifiesto()!=null)
+			encomienda.setManifiesto(enc.getManifiesto().toDTO());
+		
+		if(enc.getRemito()!=null)
+			encomienda.setRemito(enc.getRemito().toDTO());
+		
+		if(enc.factura != null)
+			encomienda.setFactura(enc.factura.toDTO());
+
+		return encomienda;
+	}
 	
 	/*Actualiza la posicion con latitud y longitud, y actualiza el estado: 
 	*   Pendiente,	//por salir en viaje

@@ -37,6 +37,12 @@ public class ServletEncomiendasListado extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		listarEncomiendasParticulares(request, response);
+	}
+
+
+	private void listarEncomiendasParticulares(HttpServletRequest request,
+			HttpServletResponse response) {
 		try{
 			List<EncomiendaWeb> encomiendas = new ArrayList<EncomiendaWeb>();
 				 
@@ -66,7 +72,6 @@ public class ServletEncomiendasListado extends HttpServlet {
 			request.setAttribute("mensaje", "Ha ocurrido un error");
 		}
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}

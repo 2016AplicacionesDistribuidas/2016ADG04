@@ -1,13 +1,13 @@
 package com.ADG04.web.servlets;
 
-public class EncomiendaWeb {
+public class EncomiendaEmpresaWeb {
 
 	private Integer idEncomienda;
 	private Integer idCliente;
 	private Boolean envioAsignado;
 	private String estado;
 		
-	public EncomiendaWeb(Integer idEncomienda, Integer idCliente, String estado,
+	public EncomiendaEmpresaWeb(Integer idEncomienda, Integer idCliente, String estado,
 			Boolean envioAsignado) {
 		super();
 		this.idEncomienda = idEncomienda;
@@ -15,7 +15,7 @@ public class EncomiendaWeb {
 		this.estado = estado;
 		this.envioAsignado = envioAsignado;
 	}
-	public EncomiendaWeb() {
+	public EncomiendaEmpresaWeb() {
 		// TODO Auto-generated constructor stub
 	}
 	public Integer getIdEncomienda() {
@@ -50,7 +50,7 @@ public class EncomiendaWeb {
         		+ "\", \"idCliente\":\"" + idCliente.toString() 
         		+ "\", \"estado\":\"" + this.getEstado()
         		+ "\", \"envioAsignado\":\"" + this.tieneEnvio() 
-        		+ "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?action=getEncomienda&idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
+        		+ "\", \"verEncomienda\":\"" + "<a href=ServletVerEncomiendasParticular?action=getEncomiendaEmpresa&idEncomienda="+idEncomienda.toString()+">Ver Encomienda</a>" + "\"}";
     }
 	
 	private String tieneEnvio(){

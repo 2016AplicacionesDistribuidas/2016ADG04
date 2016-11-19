@@ -318,15 +318,51 @@ public class EncomiendaParticular extends Encomienda{
 		if(ence.getEnvios()!=null){
 			//Envios
 			for(EnvioE envioE:ence.getEnvios()){
-				Envio e = new Envio();
-				e.setIdEnvio(envioE.getIdEnvio());
-				enc.addEnvio(e);
+				enc.addEnvio(envioFromEntity(envioE));
 			}
 		}
 		
 		return enc;
 	}
 
+	/**
+	 * Envio from Entity, sin pasar por la encomienda
+	 * **/
+	private Envio envioFromEntity(EnvioE e){
+		
+		Envio  env = new Envio();
+		env.setEstado(e.getEstado());
+		env.setFechaYHoraLlegadaEstimada(e.getFechaYHoraLlegadaEstimada());
+		env.setFechaYHoraSalida(e.getFechaYHoraSalida());
+		env.setIdEnvio(e.getIdEnvio());
+		env.setNroTracking(e.getNroTracking());
+		env.setPropio(e.isPropio());
+		env.setFechaActualizacion(e.getFechaActualizacion());
+		
+		MapaDeRuta mapa = null;
+		if(e.getMapaDeRuta()==null){
+			MapaDeRutaE mr = MapaDeRutaDao.getInstancia().getBySucursalOrigenyDestino(e.getSucursalOrigen().getIdSucursal(), e.getSucursalDestino().getIdSucursal());
+			mapa = new MapaDeRuta().fromEntity(mr);
+		}
+		else{
+			mapa = new MapaDeRuta().fromEntity(e.getMapaDeRuta());
+		}
+		
+		if(mapa!=null)
+			env.setMapaDeRuta(mapa);	
+		
+		env.setProveedor(new Proveedor().fromEntity(e.getProveedor()));
+		
+		if(e.getVehiculo() != null)
+			env.setVehiculo(new Vehiculo().fromEntity(e.getVehiculo()));
+		
+		env.setPosicionActual(new Coordenada().fromEntity(e.getPosicionActual()));
+		env.setSucursalDestino(new Sucursal().fromEntity(e.getSucursalDestino()));
+		env.setSucursalOrigen(new Sucursal().fromEntity(e.getSucursalOrigen()));
+		
+		return env;
+	}
+	
 
 	private EntityManager getEntityFactoryInstace() {
 		return EntityManagerProvider.getInstance().getEntityManagerFactory().createEntityManager();

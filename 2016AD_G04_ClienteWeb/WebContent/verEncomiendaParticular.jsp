@@ -21,7 +21,6 @@
 	encomienda = "0";
 	destinos = "";
 	encomienda = (String)request.getAttribute("idEncomienda");
-	destinos = (String)request.getAttribute("destinos");
 //	sucursalNombre = (String)request.getAttribute("sucursalNombre");
 	estado = (String)request.getAttribute("estado");
 %>
@@ -127,9 +126,9 @@ $(document).ready(function() {
     <li><label>Código Sucursal de origen: </label><input name="idSucursalOrigen" type="text" readonly="readonly" class="input-field" id="idSucursalOrigen" value='<%=request.getAttribute("idSucursalOrigen")%>'/></li><br/>
     <li><label>Código Sucursal actual: </label><input name="idSucursalActual" type="text" readonly="readonly" class="input-field" id="idSucursalActual" value='<%=request.getAttribute("idSucursalActual")%>'/></li><br/>
 	<li><label>Código Sucursal de destino: </label><input name="idSucursalDestino" type="text" readonly="readonly" class="input-field" id="idSucursalDestino" value='<%=request.getAttribute("idSucursalDestino")%>' /></li><br/>
-	
+
 	<li><label>Estado: </label><input name="estadoEncomienda" type="text" readonly="readonly" class="input-field" id="estadoEncomienda" value='<%=request.getAttribute("estadoEncomienda")%>' /></li><br/>
-	
+
  	<br/>
  	
 	<li><label>Fecha de recepci&oacute;n: </label><input type="text" id="fechaRecepcion" class="input-field" readonly="readonly" value='<%=request.getAttribute("fechaCreacion")%>' ></li><br/>
@@ -164,33 +163,23 @@ $(document).ready(function() {
         
    	%>
    	</table>
-   	
+	
   <br />
-  <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" 
+
+  <br /> 
   <% 
   String es = (String)request.getAttribute("estado");
   boolean show=false;
   if("ingresada".equals(estado.toLowerCase()) || "enesperaasignacion".equals(estado.toLowerCase())){
 	  show = true;
   }
-  if(!show){ %>	 style="display: none;"<%}  %> />
+  if(!show){ %>	 <br /><input type="button" value="asignarEnvio" id="btnAsignarEnvio" /><%}  %> />
+
+   
     <div style="display: none;" id="divAsignarEnvio"> 
     <input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;"/> 
     </div>
-   	 
-<%-- 		<% --%>
-<!--  		Boolean tieneEnvio = (Boolean)request.getAttribute("tieneEnvio");-->
-<%--    		if(tieneEnvio){ %> --%>
-<%--    			<label>Nro Envío asignado: </label><input class="input-field" name="idEnvio" type="text" id="idEnvio" readonly="readonly" value='<%=request.getAttribute("idEnvio")%>' /> --%>
-<%--    		<% --%>
-<%--    		} else {%> --%>
-<!--    			<input type="button" value="asignarEnvio" id="btnAsignarEnvio" /> -->
-<!--    			<div style="display: none;" id="divAsignarEnvio"> -->
-<!--    				<input class="input-field" name="idEnvioAsignado" type="text" id="idEnvioAsignado" readonly="readonly" style="width: 300px;" /> -->
-<!--    			</div> -->
-<%--    		<%} --%>
-<%--     %> --%>
-    
+   
 	<br /><br />
 	<input id="btnVerFactura" type="button" onclick="showFactura();" value="Ver Factura ">
 	

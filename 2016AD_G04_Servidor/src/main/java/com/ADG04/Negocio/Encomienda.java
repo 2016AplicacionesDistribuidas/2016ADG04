@@ -1109,7 +1109,7 @@ public  class Encomienda{
 		encomienda.setVolumenGranel(this.getVolumenGranel()); 
 		encomienda.setUnidadGranel(this.getUnidadGranel());
 		encomienda.setCargaGranel(this.getCargaGranel());		
-		encomienda.setTipoEncomienda("P");	//OJO, encomienda empresa!!!!!!!1
+		//encomienda.setTipoEncomienda("P");	//OJO, encomienda empresa!!!!!!!1
 		
 		encomienda.setTercerizado(this.isTercerizado());
 		encomienda.setEstado(EncomiendaEstado.Ingresada.toString());
@@ -1322,8 +1322,8 @@ public  class Encomienda{
 		encomienda.setCliente(this.getCliente().toDTO());
 
 		encomienda.setSucursalOrigen(this.getSucursalOrigen().toDTO());
-		encomienda.setSucursalActual(this.getSucursalDestino().toDTO());
-		encomienda.setSucursalDestino(this.getSucursalActual().toDTO());
+		encomienda.setSucursalActual(this.getSucursalActual().toDTO());
+		encomienda.setSucursalDestino(this.getSucursalDestino().toDTO());
 		
 		encomienda.setLargo(this.getLargo());
 		encomienda.setAncho(this.getAncho());
@@ -1361,11 +1361,9 @@ public  class Encomienda{
 
 		//Envios
 		for(Envio envio:this.getEnvios()){
-			DTO_Envio e = new DTO_Envio();
-			e.setId(envio.getIdEnvio());
-			encomienda.addEnvio(e);
+			encomienda.addEnvio(envio.toDTO());
 		}
-		
+				
 		return encomienda;
 	}
 	

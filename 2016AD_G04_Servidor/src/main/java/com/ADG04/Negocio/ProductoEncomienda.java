@@ -1,5 +1,6 @@
 package com.ADG04.Negocio;
 
+import com.ADG04.Servidor.dao.ProductoDao;
 import com.ADG04.Servidor.model.ProductoEncomiendaE;
 import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 
@@ -59,6 +60,7 @@ public class ProductoEncomienda{
 		p.setCantidad(this.cantidad);
 		p.setIdEncomienda(this.getIdEncomienda());
 		p.setIdProductoCliente(this.producto.getIdProducto());
+		p.setDescProducto(this.getProducto().getDescripcion());
 		
 		return p;
 	}
@@ -73,10 +75,13 @@ public class ProductoEncomienda{
 
 	public ProductoEncomienda fromEntity(ProductoEncomiendaE pe) {
 		ProductoEncomienda prod = new ProductoEncomienda();
+		
+		Producto p= new Producto().fromEntity(pe.getProducto());
+		
 		prod.setCantidad((int) pe.getCantidad());
 		prod.setIdProductoEncomienda(pe.getIdProductoEncomienda());
 		prod.setIdEncomienda(pe.getEncomienda().getIdEncomienda());
-		prod.setProducto(new Producto().fromEntity(pe.getProducto()));
+		prod.setProducto(p);
 		return prod;
 	}
 
