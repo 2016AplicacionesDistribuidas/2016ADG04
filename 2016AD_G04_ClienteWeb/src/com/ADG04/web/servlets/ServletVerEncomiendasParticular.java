@@ -176,7 +176,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 		}*/
 		
 		//Manifiesto
-		 e.getManifiesto().getId();
+		e.getManifiesto().getId();
 		DTO_Manifiesto manifiesto = e.getManifiesto();
 		if(manifiesto != null){
 			request.setAttribute("itemsManifiesto", manifiesto.getDetalle());
@@ -212,7 +212,8 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 			
 			request.setAttribute("totalFactura", total.toString());
 
-			List<DTO_ProductoEncomienda> ps = new ArrayList<DTO_ProductoEncomienda>();
+			List<DTO_ProductoEncomienda> ps = WebBusinessDelegate.getInstancia().getProductosByEncomienda(e.getIdEncomienda());
+			/*List<DTO_ProductoEncomienda> ps = new ArrayList<DTO_ProductoEncomienda>();
 			if(e.getProductos() != null){
 				for(DTO_ProductoEncomienda pe:e.getProductos()){
 					DTO_Producto p = WebBusinessDelegate.getInstancia().getProducto(pe.getIdProductoCliente());
@@ -221,7 +222,9 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 					ps.add(pe2);
 				}
 				request.setAttribute("productos", ps);
-			}
+			}*/
+			if(ps!=null)
+				request.setAttribute("productos", ps);
 		}
 
 		

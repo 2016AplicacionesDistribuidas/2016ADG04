@@ -18,6 +18,7 @@ import com.ADG04.bean.Encomienda.DTO_EnvioHistorico;
 import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
+import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 
 public interface IEncomiendaRemote {
@@ -71,6 +72,7 @@ public interface IEncomiendaRemote {
 	public boolean estaEncomiendaAsignada(int idEncomienda) throws RemoteException;
 	public List<DTO_Encomienda> listarEncomiendasByEnvio(int idEnvio) throws RemoteException;
 	public Date calcularFechaEntrega(int idSucursalOrigen, int idSucursalDestino) throws RemoteException;
+	public List<DTO_ProductoEncomienda> getProductosByEncomienda(int idEncomienda) throws RemoteException;
 
 	/***
 	 * Envios que tienen la sucursal de destino indicada, y no están en estado concluído.

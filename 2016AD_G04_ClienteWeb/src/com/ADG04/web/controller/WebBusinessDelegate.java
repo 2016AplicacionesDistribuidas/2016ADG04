@@ -489,5 +489,9 @@ public class WebBusinessDelegate {//implements InterfazRemotaDistribucionPaquete
 	public Integer asignarEnvio(Integer idEncomienda, Integer idSucDestino,	Integer idCarrier) throws RemoteException, BusinessException {
 		return this.objetoRemoto.asignarEnvio(idEncomienda, idSucDestino, idCarrier); 
 	}
+
+	public List<DTO_ProductoEncomienda> getProductosByEncomienda(int idEncomienda) throws RemoteException {
+		return this.objetoRemoto.getProductosByEncomienda(idEncomienda);
+	}
 		
 }
