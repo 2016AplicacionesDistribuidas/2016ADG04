@@ -77,7 +77,7 @@ public class ServletEncomiendaParticular extends HttpServlet {
 						DTO_Sucursal sucActual= new DTO_Sucursal(Integer.parseInt((String)request.getParameter("idSucursalOrigen")));
 						
 						int idSucDestino = 0;
-						if(request.getParameter("idSucursalDestino")!=null){
+						if(request.getParameter("idSucursalDestino")!=null && !request.getParameter("idSucursalDestino").toString().isEmpty()){
 							idSucDestino=Integer.parseInt((String)request.getParameter("idSucursalDestino"));
 						}
 						else{
