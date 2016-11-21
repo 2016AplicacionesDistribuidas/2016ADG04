@@ -18,9 +18,7 @@
 
 
 $(document).ready(function() {	
-			var firstClick = true;
 			$('#sinAsignacion').on("click",function() {
-
 	             $("#projectTable").jqGrid('GridUnload'); 
 
 				 var urlG= "servletEncomiendasListado?noasignados=0"
