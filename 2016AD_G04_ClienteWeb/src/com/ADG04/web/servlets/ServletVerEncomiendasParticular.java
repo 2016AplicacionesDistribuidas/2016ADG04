@@ -214,9 +214,7 @@ public class ServletVerEncomiendasParticular extends HttpServlet {
 
 			List<DTO_ProductoEncomienda> ps = new ArrayList<DTO_ProductoEncomienda>();
 			if(e.getProductos() != null){
-				
 				for(DTO_ProductoEncomienda pe:e.getProductos()){
-					System.out.println(pe.getIdProductoCliente());
 					DTO_Producto p = WebBusinessDelegate.getInstancia().getProducto(pe.getIdProductoCliente());
 					DTO_ProductoEncomienda pe2 = pe;
 					pe2.setDescProducto(p.getDescripcion());

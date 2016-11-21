@@ -18,7 +18,35 @@
 
 
 $(document).ready(function() {	
-	
+
+	$('#sinAsignacion').on("click",function() {
+        $("#projectTable").jqGrid('GridUnload'); 
+
+			var urlG= "servletEncomiendasListado?noasignados=0"
+			if(document.getElementById("sinAsignacion").checked)
+				  urlG = 	"servletEncomiendasListado?noasignados=1"
+			$("#projectTable").jqGrid({
+		                   url: urlG,
+		  
+		                   datatype: "json",
+		                   jsonReader: {repeatitems: false, id: "ref"},
+		                   colNames:['Nro Encomienda','Nro Cliente', 'Envio asignado', 'Estado','Ver Encomienda'],
+		                   colModel:[
+		                       {name:'idEncomienda',index:'idEncomienda', width:100},
+		                       {name:'idCliente',index:'idCliente', width:100},
+		                       {name:'envioAsignado',index:'envioAsignado', width:100},
+		  					  {name:'estado',index:'estado', width:100},
+		  					  {name:'verEncomienda',index:'verEncomienda', width:100}
+		                   ],
+		                   rowNum:20,
+		                //   rowList:[20,60,100],
+		                   height:200,
+		                   pager: "#pagingDiv",
+		                   viewrecords: true,
+		                   caption: ""
+		               });   
+			});
+
              $("#projectTable").jqGrid({
                   url: "servletEncomiendasListadoEmpresa",
  
@@ -64,6 +92,7 @@ $(document).ready(function() {
      <div class="amarillo"></div>
   	<div class="page" style="background: #ccc; padding: 25px 100px;height:500px">
 	          <div style="float: left; height: 200px !important;">
+	<div><input type="checkbox" value=true id="sinAsignacion" name="sinAsignacion" onclick="">Solo sin envios asignados</div>
 	              <table id="projectTable"></table>
 	              <div id="pagingDiv"></div>
 	          </div>
