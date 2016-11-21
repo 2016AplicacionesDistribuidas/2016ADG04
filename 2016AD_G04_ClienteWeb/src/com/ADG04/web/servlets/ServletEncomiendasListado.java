@@ -73,7 +73,6 @@ public class ServletEncomiendasListado extends HttpServlet {
 						enc = new EncomiendaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado);
 						enc.setTipo("P");
 						gridData.addItem(enc);
-						System.out.println("aca");
 					}
 				}
 				else{

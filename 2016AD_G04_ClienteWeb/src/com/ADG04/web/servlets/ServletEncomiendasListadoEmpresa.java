@@ -47,10 +47,28 @@ public class ServletEncomiendasListadoEmpresa extends HttpServlet {
 			int totalNumberOfRecords = encomiendasP.size(); 
 			JqGridData<EncomiendaEmpresaWeb> gridData = new JqGridData<EncomiendaEmpresaWeb>(totalNumberOfPages, currentPageNumber, totalNumberOfRecords, encomiendas);		
 			
+			boolean noasignados=false;
+			
+			if(request.getParameter("noasignados")!=null){
+				System.out.println(request.getParameter("noasignados"));
+				if("1".equals(request.getParameter("noasignados").toString())){
+					noasignados=true;
+					System.out.println("DALE");
+				}
+			}
+			
 			for(DTO_EncomiendaEmpresa encP:encomiendasP){
 
 				boolean envioAsignado = WebBusinessDelegate.getInstancia().estaEncomiendaAsignada(encP.getIdEncomienda());
-				gridData.addItem(new EncomiendaEmpresaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado));
+
+				if(noasignados==true){
+					if(envioAsignado==false){
+						gridData.addItem(new EncomiendaEmpresaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado));
+					}
+				}
+				else{
+					gridData.addItem(new EncomiendaEmpresaWeb(encP.getIdEncomienda(), encP.getCliente().getId(),encP.getEstado(), envioAsignado));
+				}
 			}
 			
 			System.out.println("Grid Data: " + gridData.getJsonString());
