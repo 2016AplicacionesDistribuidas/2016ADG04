@@ -74,6 +74,7 @@ import com.ADG04.Servidor.dao.MapaDeRutaDao;
 import com.ADG04.Servidor.dao.PaisDao;
 import com.ADG04.Servidor.dao.PlanMantenimientoDao;
 import com.ADG04.Servidor.dao.ProductoDao;
+import com.ADG04.Servidor.dao.ProductoEncomiendaDao;
 import com.ADG04.Servidor.dao.ProvinciaDao;
 import com.ADG04.Servidor.dao.RemitoDao;
 import com.ADG04.Servidor.dao.RolDao;
@@ -2221,5 +2222,17 @@ public class DistribucionPaquetesRMI  extends UnicastRemoteObject implements Int
 		
 		return idEnvio;
 
+	}
+	
+	public List<DTO_ProductoEncomienda> getProductosByEncomienda(int idEncomienda) throws RemoteException{
+		List<ProductoEncomiendaE> lista = ProductoEncomiendaDao.getInstancia().getByEncomienda(idEncomienda);
+		List<DTO_ProductoEncomienda> dtos = new ArrayList<DTO_ProductoEncomienda>();
+		
+		for(ProductoEncomiendaE prodE:lista){
+			ProductoEncomienda prod = new ProductoEncomienda().fromEntity(prodE);
+			dtos.add(prod.toDTO());
+		}
+		
+		return dtos;
 	}
 }

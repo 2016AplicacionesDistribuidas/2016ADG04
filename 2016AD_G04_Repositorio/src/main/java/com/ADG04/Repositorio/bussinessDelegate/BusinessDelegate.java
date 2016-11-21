@@ -31,6 +31,7 @@ import com.ADG04.bean.Encomienda.DTO_EnvioPropio;
 import com.ADG04.bean.Encomienda.DTO_EnvioTercerizado;
 import com.ADG04.bean.Encomienda.DTO_Manifiesto;
 import com.ADG04.bean.Encomienda.DTO_MapaDeRuta;
+import com.ADG04.bean.Encomienda.DTO_ProductoEncomienda;
 import com.ADG04.bean.Encomienda.DTO_Remito;
 import com.ADG04.bean.Proveedor.DTO_TarifasCarrier;
 import com.ADG04.bean.Proveedor.DTO_Proveedor;
@@ -983,5 +984,10 @@ public class BusinessDelegate implements InterfazRemotaDistribucionPaquetes
 
 	public Integer asignarEnvio(Integer idEncomienda, Integer idSucursalDestino,Integer idCarrier) throws RemoteException, BusinessException {
 		return this.businessService.asignarEnvio(idEncomienda, idSucursalDestino, idCarrier);
+	}
+
+	public List<DTO_ProductoEncomienda> getProductosByEncomienda(
+			int idEncomienda) throws RemoteException {
+		return this.businessService.getProductosByEncomienda(idEncomienda);
 	}
 }
